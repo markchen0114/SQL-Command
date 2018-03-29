@@ -57,6 +57,8 @@ SELECT scheduler_id,
 FROM   sys.dm_os_schedulers
 WHERE  scheduler_id < 255;
 
+--更改db owner (非加入db_owner群組中)
+EXEC sp_changedbowner 'sa';
 
 --重新設定使用者權限
 use HappyRecome;

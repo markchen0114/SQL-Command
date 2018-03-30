@@ -1,1 +1,3 @@
 # SQL-Command
+- MSSQL
+- MySQL

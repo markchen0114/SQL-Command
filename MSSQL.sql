@@ -22,7 +22,7 @@ begin
   /* SQL 2015 or above */
   set @ls_Command = @ls_Command + 'ALTER INDEX ALL ON ['+@ls_TableName+'] REBUILD '
   /* SQL 2000 */
-  -- set @ls_Command = @ls_Command + 'DBCC DBREINDEX (['+@ls_TableName+'], '', 80) '
+  -- set @ls_Command = @ls_Command + 'DBCC DBREINDEX (['+@ls_TableName+'], '''') '
   --
   exec (@ls_Command)
   --

@@ -19,6 +19,7 @@ while @@FETCH_STATUS = 0
 begin
   --
   set @ls_Command = ''
+  print 'Table: ' + @ls_TableName + ' processing ... '
   if REPLACE(@@VERSION,'  ',' ') like '%Server 2000%' begin
     /* SQL 2000 */
     set @ls_Command = @ls_Command + 'DBCC DBREINDEX (['+@ls_TableName+'], '''') '

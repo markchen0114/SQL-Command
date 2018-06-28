@@ -1,3 +1,37 @@
+/* Rebuild Index for all table */
+use <DatabaseName>
+GO
+
+Declare
+  @ls_TableName varchar(100),   /*table name*/
+  @ls_Command   varchar(800)    /*sql command*/
+
+-- loop : get all table name
+declare lo_Cursor insensitive cursor for
+SELECT TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_TYPE = 'BASE TABLE'
+ORDER BY TABLE_NAME
+
+Open lo_Cursor
+fetch lo_Cursor into @ls_TableName
+while @@FETCH_STATUS = 0
+begin
+  --
+  set @ls_Command = ''
+  /* SQL 2015 or above */
+  set @ls_Command = @ls_Command + 'ALTER INDEX ALL ON ['+@ls_TableName+'] REBUILD '
+  /* SQL 2000 */
+  -- set @ls_Command = @ls_Command + 'DBCC DBREINDEX (['+@ls_TableName+'], '', 80) '
+  --
+  exec (@ls_Command)
+  --
+  fetch lo_Cursor into @ls_TableName
+end
+close lo_Cursor
+deallocate lo_Cursor
+
+
 /*清除交易紀錄*/
 BACKUP LOG CienveAccount WITH TRUNCATE_ONLY
 /*檢視資料庫檔案大小*/

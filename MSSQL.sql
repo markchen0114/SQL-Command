@@ -1,4 +1,4 @@
-/* Rebuild Index for all table */
+/* Rebuild Index for all table --begin-- */
 use <DatabaseName>
 GO
 
@@ -30,6 +30,7 @@ begin
 end
 close lo_Cursor
 deallocate lo_Cursor
+/* Rebuild Index for all table --end-- */
 
 
 /*清除交易紀錄*/
@@ -64,6 +65,41 @@ ALTER DATABASE DBNAME SET READ_COMMITTED_SNAPSHOT ON
 --設置資料庫為MULTI_USER模式
 ALTER DATABASE DBNAME SET MULTI_USER
 
+/* Disk usage of tables --begin-- */
+set nocount on
+create table #spaceused (
+  name nvarchar(120),
+  rows char(11),
+  reserved varchar(18),
+  data varchar(18),
+  index_size varchar(18),
+  unused varchar(18)
+)
+
+declare Tables cursor for
+  select name
+  from sysobjects where type='U'
+  order by name asc
+
+OPEN Tables
+DECLARE @table varchar(128)
+
+FETCH NEXT FROM Tables INTO @table
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+  insert into #spaceused exec sp_spaceused @table
+  FETCH NEXT FROM Tables INTO @table
+END
+
+CLOSE Tables
+DEALLOCATE Tables 
+
+select * from #spaceused
+drop table #spaceused
+
+exec sp_spaceused
+/* Disk usage of tables --end-- */
 
 --查詢資料庫狀態
 select name,user_access,user_access_desc,

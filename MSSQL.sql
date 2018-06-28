@@ -69,7 +69,7 @@ ALTER DATABASE DBNAME SET MULTI_USER
 set nocount on
 create table #spaceused (
   name nvarchar(120),
-  rows char(11),
+  rows int,
   reserved varchar(18),
   data varchar(18),
   index_size varchar(18),

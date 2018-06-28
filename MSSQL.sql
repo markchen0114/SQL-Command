@@ -19,10 +19,13 @@ while @@FETCH_STATUS = 0
 begin
   --
   set @ls_Command = ''
-  /* SQL 2015 or above */
-  set @ls_Command = @ls_Command + 'ALTER INDEX ALL ON ['+@ls_TableName+'] REBUILD '
-  /* SQL 2000 */
-  -- set @ls_Command = @ls_Command + 'DBCC DBREINDEX (['+@ls_TableName+'], '''') '
+  if REPLACE(@@VERSION,'  ',' ') like '%Server 2000%' begin
+    /* SQL 2000 */
+    set @ls_Command = @ls_Command + 'DBCC DBREINDEX (['+@ls_TableName+'], '''') '
+  end else begin
+    /* SQL 2015 or above */
+    set @ls_Command = @ls_Command + 'ALTER INDEX ALL ON ['+@ls_TableName+'] REBUILD '
+  end
   --
   exec (@ls_Command)
   --

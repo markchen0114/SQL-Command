@@ -99,7 +99,7 @@ END
 CLOSE Tables
 DEALLOCATE Tables 
 
-select * from #spaceused
+select * from #spaceused order by rows desc
 drop table #spaceused
 
 exec sp_spaceused

@@ -1,3 +1,12 @@
+-- Get queries waiting status
+select * from sys.dm_os_wait_stats
+
+-- Finding blocking/locking queries
+SELECT * 
+FROM sys.dm_exec_requests
+WHERE DB_NAME(database_id) = 'agilitycp' 
+AND blocking_session_id <> 0
+
 /* Rebuild Index for all table --begin-- */
 use <DatabaseName>
 GO

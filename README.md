@@ -1,3 +1,3 @@
-# SQL-Command - Tt
+# SQL-Command
 - MSSQL
 - MySQL

@@ -198,3 +198,6 @@ WHERE t.type_desc = 'USER_TABLE'
 GROUP BY sc.name + '.' + t.NAME,
       i.[object_id],i.index_id, i.name, p.[Rows]
 ORDER BY ( SUM(a.total_pages) * 8 ) / 1024 DESC
+
+
+BACKUP DATABASE GICDB TO  DISK = N'D:\DB_Backup\GICDB.bak' WITH  INIT ,  NOUNLOAD ,  NAME = N'GICDB backup',  NOSKIP ,  STATS = 10,  NOFORMAT

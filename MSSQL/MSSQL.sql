@@ -201,3 +201,13 @@ ORDER BY ( SUM(a.total_pages) * 8 ) / 1024 DESC
 
 
 BACKUP DATABASE GICDB TO DISK = N'D:\DB_Backup\GICDB.bak' WITH  INIT ,  NOUNLOAD ,  NAME = N'DB backup',  NOSKIP ,  STATS = 10,  NOFORMAT
+
+-- CTE
+; with cte as (
+  select convert(datetime,'20200728') [Date]
+  union all
+  select [Date] + 1 from cte where [Date] < '20200801'
+)
+select * from cte
+OPTION(MAXRECURSION 0) -- 0: no limit
+

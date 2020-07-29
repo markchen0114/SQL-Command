@@ -211,3 +211,4 @@ BACKUP DATABASE GICDB TO DISK = N'D:\DB_Backup\GICDB.bak' WITH  INIT ,  NOUNLOAD
 select * from cte
 OPTION(MAXRECURSION 0) -- 0: no limit
 
+

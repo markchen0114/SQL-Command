@@ -1,3 +1,9 @@
+-- Connect to local MySQL
+mysql -u root -p
+
+-- Connect to remote MySQL
+mysql -p -h <ip> -P <port>
+
 -- Close Safe Update Mode
 SET SQL_SAFE_UPDATES = 0;
 

@@ -214,3 +214,10 @@ OPTION(MAXRECURSION 0) -- 0: no limit
 -- update all view with new column
 EXEC sp_RefreshView
 
+
+/*
+MSSQL DB 擴充事件
+1. Error_Report 建議Error_Level 10以上的收錄
+2. block: 要先設定sp_config 'block .. threshold (s)'
+3. xml_dead_lock
+*/

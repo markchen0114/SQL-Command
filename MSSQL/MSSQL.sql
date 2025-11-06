@@ -221,3 +221,20 @@ MSSQL DB 擴充事件
 2. block: 要先設定sp_config 'block .. threshold (s)'
 3. xml_dead_lock
 */
+
+-- 查詢資料表統計資訊
+SELECT 
+    t.name AS TableName,
+    s.name AS StatName,
+    STATS_DATE(s.object_id, s.stats_id) AS LastUpdated,
+    sp.rows AS TotalRows,
+    sp.rows_sampled,
+    sp.modification_counter AS RowsModifiedSinceLastUpdate,
+    s.auto_created,
+    s.user_created,
+    s.no_recompute
+FROM sys.stats s
+JOIN sys.tables t ON s.object_id = t.object_id
+CROSS APPLY sys.dm_db_stats_properties(s.object_id, s.stats_id) sp
+WHERE t.name = 'Orders';
+

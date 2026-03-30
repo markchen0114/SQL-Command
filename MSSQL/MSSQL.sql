@@ -238,3 +238,13 @@ JOIN sys.tables t ON s.object_id = t.object_id
 CROSS APPLY sys.dm_db_stats_properties(s.object_id, s.stats_id) sp
 WHERE t.name = 'Orders';
 
+-- 檢查資料庫設定狀態
+SELECT 
+    name AS DatabaseName,
+    is_auto_update_stats_on,        -- 預設應為 1 (開啟)
+    is_auto_update_stats_async_on   -- 目標應為 1 (開啟)
+FROM sys.databases
+WHERE name = DB_NAME();
+
+-- 開啟 非同步統計更新 (ASYNC) 避免更新統計資料時, 資料表鎖定
+ALTER DATABASE CURRENT SET AUTO_UPDATE_STATISTICS_ASYNC ON;

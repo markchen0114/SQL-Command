@@ -10,3 +10,12 @@ SELECT TOP 100
     additional_information AS [詳細錯誤訊息]
 FROM sys.fn_get_audit_file ('F:\TC\logs\audit\*.sqlaudit', DEFAULT, DEFAULT)
 ORDER BY event_time DESC;
+
+-- 將該步驟的伺服器連線目標，明確指定為本機共用記憶體 (lpc: 代表 Local Procedure Call)
+USE [msdb];
+GO
+EXEC dbo.sp_update_jobstep 
+    @job_name = N'_MTN_GetLongBatchLog', 
+    @step_id = 1, 
+    @server = N'lpc:(local)';
+GO
